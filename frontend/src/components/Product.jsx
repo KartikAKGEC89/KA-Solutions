@@ -1,5 +1,6 @@
 import React from 'react'
 import {Card, ListGroup} from 'react-bootstrap'
+import Rating from './Rating'
 
 const Product = ({product}) => {
   return (
@@ -18,7 +19,11 @@ const Product = ({product}) => {
       <ListGroup className="list-group-flush">
               <ListGroup.Item> Rs :- { product.price}</ListGroup.Item>
               <ListGroup.Item>{ product.countInStock}</ListGroup.Item>
-              <ListGroup.Item>{ product.rating}</ListGroup.Item>
+              <ListGroup.Item>
+                  <Rating 
+                       value={product.rating}
+                  />
+              </ListGroup.Item>
       </ListGroup>
     </Card>
   )
