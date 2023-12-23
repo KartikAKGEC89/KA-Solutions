@@ -1,3 +1,6 @@
 main {
     min-height: 80vh;
 }
+span {
+    margin: 0.2rem;
+}
