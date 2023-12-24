@@ -15,7 +15,7 @@ const ProductScreens = () => {
     setProduct(data)  
     }
     fetchProductId();
-  }, )
+  }, [id])
   
     return (
   <>
