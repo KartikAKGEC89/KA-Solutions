@@ -14,8 +14,8 @@ const products = [
   },
    {
     _id: '2',
-    name: 'CP Plus WIFI',
-    image: '/images/camera1.jpg',
+    name: 'CP Plus Bullet',
+    image: '/images/camerabullet.jpg',
     description:
       '',
     brand: 'CP PLUS',
