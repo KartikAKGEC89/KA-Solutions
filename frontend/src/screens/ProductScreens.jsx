@@ -6,19 +6,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { detailsProducts } from '../action/productAction'
 import Loader from '../components/loader'
 import Messages from '../components/messages'
+import { useNavigate } from "react-router-dom"
 
 const ProductScreens = () => {
   const [qty, setQty] = React.useState(0)
   const params = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const productDetails = useSelector(state => state.productDetails)
 
   const { loading, error, product } = productDetails
-  // const product = products.find((p) => p._id === id);
+
   
   React.useEffect(() => {
     dispatch(detailsProducts(params.id))
   }, [dispatch, params.id])
+
+  const addCartHandler = () => {
+    navigate(`/cart/${params.id}?qty=${qty}`)
+  }
 
   
   return (
@@ -61,8 +67,16 @@ const ProductScreens = () => {
                   <Col>
                     <strong>{product.price}</strong>
                   </Col>
+                      </Row>
+                    </ListGroup.Item>
+                   {/* <ListGroup.Item>
+                <Row>
+                  <Col>Status:</Col>
+                  <Col>
+                    {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                  </Col>
                 </Row>
-              </ListGroup.Item>
+              </ListGroup.Item> */}
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <Row>
@@ -82,20 +96,20 @@ const ProductScreens = () => {
                       </Col>
                     </Row>
                   </ListGroup.Item>
-                )}
-              <ListGroup.Item>
-                <Button
+                    )}
+                    
+                  </ListGroup>
+                   </Card>
+        </Col>
+                      <Button
+                  onClick={addCartHandler}
                   className='btn-block'
                   type='button'
                   disabled={product.countInStock === 0}
                 >
                   Add To Cart
-                </Button>
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
-        </Col>
-      </Row>
+                </Button>            
+               </Row>
       )}
     </>
   )
