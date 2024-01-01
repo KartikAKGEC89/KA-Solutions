@@ -3,6 +3,8 @@ import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
 import {useDispatch, useSelector}  from 'react-redux'
 import { listProducts } from '../action/productAction'
+import Loader from '../components/loader'
+import Messages from '../components/messages'
 
 const HomeScreens = () => {
 
@@ -20,9 +22,9 @@ const HomeScreens = () => {
   return (
     <>
     {loading ? (
-        <h2>Loading...</h2>
+        <Loader />
       ) : error ? (
-        <h3>{error}</h3>
+        <Messages />
       ) : (
         <Row>
           {products.map((product) => (
