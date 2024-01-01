@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col,Image,Card, ListGroup, Button } from 'react-bootstrap'
+import { Row, Col,Image,Card, ListGroup, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +8,7 @@ import Loader from '../components/loader'
 import Messages from '../components/messages'
 
 const ProductScreens = () => {
+  const [qty, setQty] = React.useState(0)
   const params = useParams();
   const dispatch = useDispatch();
   const productDetails = useSelector(state => state.productDetails)
@@ -62,15 +63,26 @@ const ProductScreens = () => {
                   </Col>
                 </Row>
               </ListGroup.Item>
-
-              <ListGroup.Item>
-                <Row>
-                  <Col>Status:</Col>
-                  <Col>
-                    {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
-                  </Col>
-                </Row>
-              </ListGroup.Item>
+                {product.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
+                      <Col>
+                        <Form.Control
+                          as='select'
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {[...Array(product.countInStock).keys()].map((x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
               <ListGroup.Item>
                 <Button
                   className='btn-block'
