@@ -1,0 +1,21 @@
+import axios from "axios"
+
+export const listProducts = () => async (dispatch) => {
+
+    try {
+        dispatch({ type: 'PRODUCT_LIST_REQUEST' })
+
+        const { data } = await axios.get('/api/product')
+        
+        dispatch({
+            type: 'PRODUCT_LIST_SUCCESS',
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: 'PRODUCT_LIST_FAIL',
+            payload: error.response && 'Data Not Load Successfully'
+        })
+    }
+    
+}
