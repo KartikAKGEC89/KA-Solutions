@@ -69,14 +69,14 @@ const ProductScreens = () => {
                   </Col>
                       </Row>
                     </ListGroup.Item>
-                   {/* <ListGroup.Item>
+                   <ListGroup.Item>
                 <Row>
                   <Col>Status:</Col>
                   <Col>
                     {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
                   </Col>
                 </Row>
-              </ListGroup.Item> */}
+              </ListGroup.Item>
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <Row>
@@ -99,8 +99,7 @@ const ProductScreens = () => {
                     )}
                     
                   </ListGroup>
-                   </Card>
-        </Col>
+
                       <Button
                   onClick={addCartHandler}
                   className='btn-block'
@@ -108,7 +107,9 @@ const ProductScreens = () => {
                   disabled={product.countInStock === 0}
                 >
                   Add To Cart
-                </Button>            
+                  </Button> 
+                </Card>
+               </Col>  
                </Row>
       )}
     </>
