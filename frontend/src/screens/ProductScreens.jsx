@@ -9,7 +9,7 @@ import Messages from '../components/messages'
 import { useNavigate } from "react-router-dom"
 
 const ProductScreens = () => {
-  const [qty, setQty] = React.useState(0)
+  const [qty, setQty] = React.useState(1)
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
