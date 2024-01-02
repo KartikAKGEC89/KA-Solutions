@@ -4,8 +4,8 @@ const authorizationToken = require('../middleware/authMiddleware')
 
 const router = express.Router()
 
+router.route('/').post(userRegister)
 router.post('/login', authUser)
-router.route('/register').post(userRegister)
 router.route('/profile').get(authorizationToken, getUserProfile)
 
 
