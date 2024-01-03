@@ -7,6 +7,7 @@ import HomeScreens from './screens/HomeScreens';
 import ProductScreens from './screens/ProductScreens';
 import CartScreens from './screens/CartScreens';
 import FormScreens from './screens/FormScreens.jsx';
+import RegisterScreens from './screens/RegisterScreens.jsx';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <main className='py-3'>
           <Container>
             <Routes>
+              <Route path='/register' element={<RegisterScreens />}/>
               <Route path='/login' element={<FormScreens />}/>
               <Route path='/' element={<HomeScreens />} exact />
               <Route path='/product/:id' element={<ProductScreens />} />
