@@ -32,7 +32,7 @@ const FormScreens = () => {
     return (
      <>
             <Container>
-                <Row className='justify-conten-md-center'>
+                <Row className='justify-content-md-center'>
       <Col xs={12} md={6}>
     
                         <h1>Sign In</h1>
