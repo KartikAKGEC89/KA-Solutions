@@ -13,14 +13,14 @@ const RegisterScreens = () => {
     const navigate = useNavigate()
 
     const userRegister = useSelector(state => state.userRegister)
-    const { loading, error, user } = userRegister
+    const { loading, error, userInfo } = userRegister
     
 
     React.useEffect(() => {
-    if (user) {
-      navigate('/login')
+      if (userInfo) {
+      navigate("/login");
     }
-    }, [navigate, user])
+    }, [navigate, userInfo])
     
     const submitHandler = (e) => {
         e.preventDefault()
@@ -35,7 +35,7 @@ const RegisterScreens = () => {
                         <h1>Register</h1>
                         {loading && <Loader />}
                         {
-                            error && alert('User Not Authorized')
+                            error && alert('Enter Valid Details ')
                         }
                       <Form onSubmit={submitHandler}>
                           <Form.Group controlId='name'>
