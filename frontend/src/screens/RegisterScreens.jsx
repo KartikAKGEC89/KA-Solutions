@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Form, Row, Col, Button } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Loader from '../components/loader'
 import {useDispatch, useSelector} from 'react-redux'
 import { register } from '../action/userAction'
@@ -10,17 +10,19 @@ const RegisterScreens = () => {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const location = useLocation()
 
     const userRegister = useSelector(state => state.userRegister)
     const { loading, error, userInfo } = userRegister
     
+    const redirect = location.search ? location.search.split('=')[1] : '/'
 
     React.useEffect(() => {
       if (userInfo) {
-      navigate("/login");
+      navigate(redirect);
     }
-    }, [navigate, userInfo])
+    }, [navigate,redirect, userInfo])
     
     const submitHandler = (e) => {
         e.preventDefault()
@@ -74,7 +76,7 @@ const RegisterScreens = () => {
             <Row className='py-3'>
                 <Col>
                     If already Register
-                  <Link to='/login'>Login Here</Link>
+                  <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>Login Here</Link>
                 </Col>
                         </Row>
                           </Col>        
