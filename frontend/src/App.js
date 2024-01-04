@@ -8,6 +8,7 @@ import ProductScreens from './screens/ProductScreens';
 import CartScreens from './screens/CartScreens';
 import FormScreens from './screens/FormScreens.jsx';
 import RegisterScreens from './screens/RegisterScreens.jsx';
+import ProfileScreens from './screens/ProfileScreens.jsx';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
           <Container>
             <Routes>
               <Route path='/register' element={<RegisterScreens />}/>
-              <Route path='/login' element={<FormScreens />}/>
+              <Route path='/login' element={<FormScreens />} />
+              <Route path='/profile' element={<ProfileScreens />} />
               <Route path='/' element={<HomeScreens />} exact />
               <Route path='/product/:id' element={<ProductScreens />} />
               <Route path='/cart/:id?' element={<CartScreens />} />
