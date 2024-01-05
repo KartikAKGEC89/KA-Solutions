@@ -16,11 +16,7 @@ const orderController = asynchandler(async (req, res) => {
 
     if (order) {
         res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            token: generateToken(user._id)
+          order
         })
     } else {
         res.status(400)
