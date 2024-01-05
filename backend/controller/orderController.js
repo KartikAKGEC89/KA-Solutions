@@ -20,7 +20,7 @@ const orderController = asynchandler(async (req, res) => {
 })
 
 const getOrderbyId = asynchandler(async (req, res) => {
-    const order = await Order.findById(req.params._id).populate('user', 'name email')
+    const order = await Order.findById(req.params.id).populate('user', 'name email')
 
     if (order) {
         res.send(order)
