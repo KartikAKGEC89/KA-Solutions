@@ -10,6 +10,8 @@ import FormScreens from './screens/FormScreens.jsx';
 import RegisterScreens from './screens/RegisterScreens.jsx';
 import ProfileScreens from './screens/ProfileScreens.jsx';
 import ShippingScreens from './screens/shippingScreens.jsx';
+import PaymentScreens from './screens/PaymentScreens.jsx';
+import PlaceOrderScreens from './screens/PlaceOrderScreens.jsx';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
       <main className='py-3'>
           <Container>
             <Routes>
+              <Route path='/placeorder' element={<PlaceOrderScreens />} />
+              <Route path='/payment' element={<PaymentScreens />} />
               <Route path='/login/shipping' element={<ShippingScreens />} />
               <Route path='/register' element={<RegisterScreens />}/>
               <Route path='/login' element={<FormScreens />} />
