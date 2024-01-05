@@ -19,4 +19,16 @@ const orderController = asynchandler(async (req, res) => {
 
 })
 
-module.exports = {orderController}
+const getOrderbyId = asynchandler(async (req, res) => {
+    const order = await Order.findById(req.params._id).populate('user', 'name email')
+
+    if (order) {
+        res.send(order)
+    } else {
+        res.status(404)
+        throw new Error('No order')
+    }
+    
+})
+
+module.exports = {orderController, getOrderbyId}
