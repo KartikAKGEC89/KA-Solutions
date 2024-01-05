@@ -28,7 +28,7 @@ const PlaceOrderScreens = () => {
 
     const handlesubmit = () => {
       dispatch(orderAction({
-          orderItem: cart.orderItem, shippingAddress: cart.shippingAddress, paymentMethod: cart.paymentMethod,itemsPrice: cart.itemsPrice, taxPrice: cart.taxPrice, shippingPrice: cart.shippingPrice, totalPrice: cart.itemsPrice 
+          orderItem: cart.cartItems, shippingAddress: cart.shippingAddress, paymentMethod: cart.paymentMethod,itemsPrice: cart.itemsPrice, taxPrice: cart.taxPrice, shippingPrice: cart.shippingPrice, totalPrice: cart.itemsPrice 
         }))
     }
     
@@ -43,7 +43,7 @@ const PlaceOrderScreens = () => {
         <Card.Text>
           Thanks for buying. Your total payment in Rs:- <strong>{cart.itemsPrice}</strong>
         </Card.Text>
-          <Button variant="primary" onClick={handlesubmit}>Place Order</Button>
+          <Button variant="primary" disabled={cart.cartItems === 0} onClick={handlesubmit}>Place Order</Button>
           
           {
             error && alert('Order not place right now server not responding !!')
