@@ -12,6 +12,7 @@ import ProfileScreens from './screens/ProfileScreens.jsx';
 import ShippingScreens from './screens/shippingScreens.jsx';
 import PaymentScreens from './screens/PaymentScreens.jsx';
 import PlaceOrderScreens from './screens/PlaceOrderScreens.jsx';
+import OrderScreens from './screens/OrderScreens.jsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <main className='py-3'>
           <Container>
             <Routes>
+              <Route path='/order/:id' element={<OrderScreens />} />
               <Route path='/placeorder' element={<PlaceOrderScreens />} />
               <Route path='/payment' element={<PaymentScreens />} />
               <Route path='/login/shipping' element={<ShippingScreens />} />
