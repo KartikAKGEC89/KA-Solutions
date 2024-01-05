@@ -2,6 +2,7 @@ import React from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { userShippingAddress } from '../action/cartAction'
+import CheckoutSteps from '../components/checkoutSteps'
 
 const ShippingScreens = () => {
 
@@ -24,7 +25,8 @@ const ShippingScreens = () => {
     
   return (
       <>
-        <Container>
+          <Container>
+              <CheckoutSteps step1 step2 />
         <Row className='justify-content-md-center'>
         <Col xs={12} md={6}>
             <Form onSubmit={submitHandler}>
