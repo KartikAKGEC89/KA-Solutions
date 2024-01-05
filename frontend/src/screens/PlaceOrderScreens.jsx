@@ -3,15 +3,33 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import placeOrder from './placeOrder.jpg'
 import CheckoutSteps from '../components/checkoutSteps';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { orderAction } from '../action/orderAction';
+import {useNavigate} from 'react-router-dom'
 const PlaceOrderScreens = () => {
 
-    const cart = useSelector(state => state.cart)
+  const cart = useSelector(state => state.cart)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-    cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+
+  cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  const orderReducer = useSelector(state => state.orderReducer)
+  const { order, success, error } = orderReducer
+
+  
+
+  React.useEffect(() => {
+    if (order) {
+       navigate(`/order/${order._id}`)
+    }  
+    // eslint-disable-next-line
+  }, [navigate, success])
 
     const handlesubmit = () => {
-        
+      dispatch(orderAction({
+          orderItem: cart.orderItem, shippingAddress: cart.shippingAddress, paymentMethod: cart.paymentMethod,itemsPrice: cart.itemsPrice, taxPrice: cart.taxPrice, shippingPrice: cart.shippingPrice, totalPrice: cart.itemsPrice 
+        }))
     }
     
 
@@ -25,7 +43,11 @@ const PlaceOrderScreens = () => {
         <Card.Text>
           Thanks for buying. Your total payment in Rs:- <strong>{cart.itemsPrice}</strong>
         </Card.Text>
-        <Button variant="primary" onClick={handlesubmit}>Place Order</Button>
+          <Button variant="primary" onClick={handlesubmit}>Place Order</Button>
+          
+          {
+            error && alert('Order not place right now server not responding !!')
+          }
       </Card.Body>
     </Card> 
     </>
