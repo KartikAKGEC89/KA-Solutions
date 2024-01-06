@@ -15,8 +15,10 @@ const OrderScreens = () => {
   const getOrder = useSelector((state) => state.getOrder)
   const { order, loading, error } = getOrder
     
-    React.useEffect(() => {
+  React.useEffect(() => {
+      if(!order || order._id !== id) {
         dispatch(getOrderdetails(id)) 
+    }
     }, [])
 
   return (
