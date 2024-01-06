@@ -16,10 +16,10 @@ const OrderScreens = () => {
   const { order, loading, error } = getOrder
     
   React.useEffect(() => {
-      if(!order || order._id !== id) {
-        dispatch(getOrderdetails(id)) 
-    }
-    }, [])
+     
+    dispatch(getOrderdetails(id)) 
+    
+    }, [dispatch, id])
 
   return (
       <>
