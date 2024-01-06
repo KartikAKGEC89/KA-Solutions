@@ -23,7 +23,14 @@ const OrderScreens = () => {
       <>
           {loading ? (<Loader />) : error ? (alert('Something went wrong')):(
             <Card >
-      <Card.Body>
+          <Card.Body>
+            <p>
+                <strong>Name: </strong> {order.user.name}
+              </p>
+              <p>
+                <strong>Email: </strong>{' '}
+                <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+              </p>
                   <Card.Title>Order :- { order._id}</Card.Title>
         <Card.Text>
               <strong> Shipping Address :-</strong>
