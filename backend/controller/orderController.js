@@ -55,4 +55,17 @@ const updateOrderById = asynchandler(async (req, res) => {
 })
 
 
-module.exports = {orderController, getOrderbyId, updateOrderById}
+const getMyOrderbyId = asynchandler(async (req, res) => {
+    const orders = await Order.find(req.user._id)
+
+    if (orders) {
+        res.send(orders)
+    } else {
+        res.status(404)
+        throw new Error('No order')
+    }
+    
+})
+
+
+module.exports = {orderController, getOrderbyId, updateOrderById, getMyOrderbyId}
