@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { getOrderdetails } from '../action/orderAction.js'
 import { Row, Col, Image, Toast } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
+import QRCode from './Payment.jpg';
 
 const OrderScreens = () => {
 
@@ -43,6 +44,22 @@ const OrderScreens = () => {
       </Card.Body>
       <ListGroup className="list-group-flush">
             <ListGroup.Item>Payment Method :- {order.paymentMethod}
+              {
+                order.paymentMethod === 'Online' ? 
+                  (
+                    <Toast variant='success'>
+                       <Image src={QRCode} alt='' width={'50%'}/>
+                      <Toast.Body>
+                  Payment Status update within 24 hrs
+                  </Toast.Body>
+                </Toast>
+                  ) : (
+                    <Toast.Body>
+                      Payment Status update later
+                    </Toast.Body>
+                 )
+                
+              }
             </ListGroup.Item>
             <ListGroup.Item>Total Price :- { order.totalPrice}</ListGroup.Item>
             <ListGroup.Item>
