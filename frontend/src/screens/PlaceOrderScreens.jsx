@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import placeOrder from './placeOrder.jpg'
 import CheckoutSteps from '../components/checkoutSteps';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderAction } from '../action/orderAction';
+import { placeOrderAction } from '../action/orderAction';
 import {useNavigate} from 'react-router-dom'
 const PlaceOrderScreens = () => {
 
@@ -26,8 +26,9 @@ const PlaceOrderScreens = () => {
     // eslint-disable-next-line
   }, [navigate, success])
 
-    const handlesubmit = () => {
-      dispatch(orderAction({
+  const handlesubmit = (event) => {
+      event.preventDefault()
+      dispatch(placeOrderAction({
           orderItem: cart.cartItems, shippingAddress: cart.shippingAddress, paymentMethod: cart.paymentMethod,itemsPrice: cart.itemsPrice, taxPrice: cart.taxPrice, shippingPrice: cart.shippingPrice, totalPrice: cart.itemsPrice 
         }))
     }

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { GET_ORDER_FAIL, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from '../constants/orderConstants'
 
 
-export const orderAction = (order) => async (dispatch, getState) => {
+export const placeOrderAction = (order) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,
@@ -55,10 +55,13 @@ export const getOrderdetails = (id) => async (dispatch, getState) => {
 
     const { data } = await axios.get(`/api/order/${id}`, config)
 
-    dispatch({
+    setTimeout(() => {
+       dispatch({
       type: GET_ORDER_SUCCESS,
       payload: data,
     })
+    }, 1500)
+   
   } catch (error) {
     dispatch({
       type: GET_ORDER_FAIL,

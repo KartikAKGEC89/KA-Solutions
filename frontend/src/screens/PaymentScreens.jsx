@@ -41,7 +41,7 @@ const PaymentScreens = () => {
                               label='Online'
                               id='paypal'
                               name='paypal'
-                              value='paypal'
+                              value='Online'
                               onChange={(e)=> setPayment(e.target.value)}
                           >
                           </Form.Check>

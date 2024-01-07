@@ -20,7 +20,7 @@ export const orderCartReducer = (state = {}, action) => {
                 error: action.payload
             }
         default:
-            return state
+            return {}
     }
 }
 
