@@ -56,14 +56,8 @@ const updateOrderById = asynchandler(async (req, res) => {
 
 
 const getMyOrderbyId = asynchandler(async (req, res) => {
-    const orders = await Order.find(req.user._id)
-
-    if (orders) {
-        res.send(orders)
-    } else {
-        res.status(404)
-        throw new Error('No order')
-    }
+    const orders = await Order.find({ user: req.user._id })
+    res.json(orders)
     
 })
 

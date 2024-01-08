@@ -6,10 +6,10 @@ const { orderController, getOrderbyId, updateOrderById, getMyOrderbyId } = requi
 
 router.route('/api/order').post(authorization, orderController)
 
+router.route('/api/order/myorder').get(authorization, getMyOrderbyId)
+
 router.route('/api/order/:id').get(authorization, getOrderbyId)
 
 router.route('/api/order/:id/pay').put(authorization, updateOrderById)
-
-router.route('/api/myorder').get(authorization, getMyOrderbyId)
 
 module.exports = router
