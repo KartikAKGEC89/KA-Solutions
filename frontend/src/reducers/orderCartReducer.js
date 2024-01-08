@@ -1,4 +1,4 @@
-import { ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS, GET_ORDER_FAIL, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_RETURN } from '../constants/orderConstants'
+import { ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS, GET_ORDER_FAIL, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL, ORDER_PAY_RETURN, GET_MY_ORDER_FAIL, GET_MY_ORDER_SUCCESS, GET_MY_ORDER_REQUEST, GET_MY_ORDER_RESET } from '../constants/orderConstants'
 
 
 export const orderCartReducer = (state = {}, action) => {
@@ -67,6 +67,31 @@ export const orderPayReducer = (state = {}, action) => {
             }
         case ORDER_PAY_RETURN:
             return {}
+        default:
+            return state
+    }
+}
+
+
+export const getMyOrderReducer = (state = { orderItem: []}, action) => {
+
+    switch (action.type) {
+        case GET_MY_ORDER_REQUEST:
+            return {
+                loading: true
+            }
+        case GET_MY_ORDER_SUCCESS:
+            return {
+                loading: false,
+                orderItem: action.payload
+            }
+        case GET_MY_ORDER_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+        case GET_MY_ORDER_RESET:
+            return []
         default:
             return state
     }
