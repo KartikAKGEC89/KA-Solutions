@@ -1,4 +1,7 @@
 import {
+  ADMIN_USER_DETAILS_FAIL,
+  ADMIN_USER_DETAILS_REQUEST,
+  ADMIN_USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
@@ -65,6 +68,19 @@ export const userUpdateProfileReducer = (state = {}, action) => {
     case USER_UPDATE_PROFILE_SUCCESS:
       return { loading: false, success: true, userInfo: action.payload }
     case USER_UPDATE_PROFILE_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const userAdminDetailsReducer = (state = { user: [] }, action) => {
+  switch (action.type) {
+    case ADMIN_USER_DETAILS_REQUEST:
+      return { ...state, loading: true }
+    case ADMIN_USER_DETAILS_SUCCESS:
+      return { loading: false, user: action.payload }
+    case ADMIN_USER_DETAILS_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state
