@@ -1,6 +1,7 @@
 const express = require('express')
 const { authUser, getUserProfile, userRegister, updateUserProfile, getAllUserProfile, } = require('../controller/userController')
 const authorizationToken = require('../middleware/authMiddleware')
+const adminMiddleware =  require('../middleware/adminMiddleware')
 
 const router = express.Router()
 
@@ -11,7 +12,7 @@ router
   .get(authorizationToken, getUserProfile)
   .put(authorizationToken, updateUserProfile)
 
-router.route('/').get(authorizationToken, adminMiddleware, getAllUserProfile)
+router.route('/admin').get(authorizationToken, adminMiddleware, getAllUserProfile)
 
 
 module.exports = router

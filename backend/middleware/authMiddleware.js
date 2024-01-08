@@ -31,15 +31,6 @@ const authorizationToken = asynchandler(async (req, res, next) => {
 })
 
 
-const adminMiddleware = asynchandler(async (req, res, next) => {
 
-    if (req.user.isAdmin === true) {
-        next()
-    } else {
-        res.status(401)
-        throw new Error('You are not admin')
-    }
 
-})
-
-module.exports = {authorizationToken, adminMiddleware}
+module.exports = authorizationToken
