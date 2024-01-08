@@ -21,7 +21,7 @@ Clone the project
 
 Go to the project directory
 
-FOR FRONTEND :- 
+#### FOR FRONTEND :- 
 
 ```bash
   cd frontend
@@ -38,7 +38,7 @@ Start the server
   npm start
 ```
 
-FOR BACKEND :-
+#### FOR BACKEND :-
 
 ```bash
   cd backend
@@ -64,6 +64,10 @@ Start the server
 
 **Database:** MongoDB
 
-## Author
+## Contributing
 
-- [Kartik Tyagi](https://www.linkedin.com/in/kartik-tyagi-a96929205/)
+Contributions are always welcome!
+
+Please contribute by creating `another branch`. If any existing functionality is not broken then your code merged in Main Branch after `reviewing`. 
+
+For any Issue you connect to me - [Kartik Tyagi](https://www.linkedin.com/in/kartik-tyagi-a96929205/)
