@@ -1,5 +1,5 @@
 const express = require('express')
-const { authUser, getUserProfile, userRegister, updateUserProfile, } = require('../controller/userController')
+const { authUser, getUserProfile, userRegister, updateUserProfile, getAllUserProfile, } = require('../controller/userController')
 const authorizationToken = require('../middleware/authMiddleware')
 
 const router = express.Router()
@@ -10,6 +10,8 @@ router
   .route('/profile')
   .get(authorizationToken, getUserProfile)
   .put(authorizationToken, updateUserProfile)
+
+router.route('/').get(authorizationToken, adminMiddleware, getAllUserProfile)
 
 
 module.exports = router
