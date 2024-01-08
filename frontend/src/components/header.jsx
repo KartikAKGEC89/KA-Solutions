@@ -30,7 +30,23 @@ const Header = () => {
                   <i className='fas fa-shopping-cart'></i> Cart
                   </Nav.Link>
               </LinkContainer>
-              {userInfo ? (
+              {userInfo && userInfo.isAdmin === true ? (
+                <NavDropdown title={userInfo.name} id='userName'>
+                <LinkContainer to='/profile'>
+              <Nav.Link  >
+                <i className='fas fa-user'></i> Profile
+                </Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to='/admin'>
+              <Nav.Link  >
+                <i className='fas fa-user'></i> User List
+                </Nav.Link>
+              </LinkContainer>
+                  <NavItem onClick={handleLogout}>
+                    LogOut
+                  </NavItem>
+                </NavDropdown>) :
+                userInfo && userInfo.isAdmin === false ? (
                 <NavDropdown title={userInfo.name} id='userName'>
                 <LinkContainer to='/profile'>
               <Nav.Link  >
@@ -40,7 +56,8 @@ const Header = () => {
                   <NavItem onClick={handleLogout}>
                     LogOut
                   </NavItem>
-                  </NavDropdown>) : <LinkContainer to='/login'>
+                </NavDropdown>):
+               <LinkContainer to='/login'>
               <Nav.Link  >
                 <i className='fas fa-user'></i> Sign In
                 </Nav.Link>
