@@ -13,7 +13,8 @@ const AdminScreen = () => {
         dispatch(getAdminUserDetails('user'))
     }, [dispatch])
   return (
-      <>
+    <>
+      <h1>User List</h1>
           {loading ? (<Loader />) : error ? (alert('Not Fetch User Detail currently')) : (
               <Table responsive striped bordered hover size='sm'>
       <thead>
