@@ -91,7 +91,7 @@ export const getMyOrderReducer = (state = { orderItem: []}, action) => {
                 error: action.payload
             }
         case GET_MY_ORDER_RESET:
-            return []
+            return {orderItem:[]}
         default:
             return state
     }
