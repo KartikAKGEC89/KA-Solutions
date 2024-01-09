@@ -1,20 +1,27 @@
 import React, { useEffect } from 'react'
-import { listProducts } from '../action/productAction'
+import { deleteProduct, listProducts } from '../action/productAction'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/loader'
-import {Button, Table} from 'react-bootstrap'
+import { Button, Table } from 'react-bootstrap'
 
 
 const AdminProductScreen = () => {
 
     const productList = useSelector(state => state.productList)
     const { loading, products, error } = productList
+
+    const deleteProductById = useSelector(state => state.deleteProductById)
+    const {success} = deleteProductById
     
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(listProducts('product'))
-    }, [dispatch])
+    }, [dispatch, success])
+
+    const deleteHandler = (id) => {
+      dispatch(deleteProduct(id))
+    }
 
     return (
         <>
@@ -47,7 +54,7 @@ const AdminProductScreen = () => {
                     </Button>
                 </td>
                 <td>
-                    <Button>
+                    <Button onClick={() => deleteHandler(product._id)}>
                         <i className="fa fa-trash" aria-hidden="true"></i>
                     </Button>
                 </td>
