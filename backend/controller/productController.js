@@ -20,4 +20,15 @@ const getProductId = asynchandler( async (req,res) => {
     }
 })
 
-module.exports = {getProduct, getProductId}
+const deleteProductId = asynchandler(async (req, res) => {
+    const product = await Product.findById(req.params.id)
+    if (product) {
+        await product.deleteOne()
+        res.json("Delete Successfully")
+    } else {
+        res.status(404)
+        throw new Error('Do not delete')
+    }
+})
+
+module.exports = {getProduct, getProductId, deleteProductId}
