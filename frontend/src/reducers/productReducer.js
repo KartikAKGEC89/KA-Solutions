@@ -26,7 +26,7 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
   }
 }
 
-export const productDetailsDeleteReducer = (state = { product: {} }, action) => {
+export const productDetailsDeleteReducer = (state = {}, action) => {
     switch (action.type) {
         case PRODUCT_DELETE_REQUEST:
             return{
@@ -35,7 +35,7 @@ export const productDetailsDeleteReducer = (state = { product: {} }, action) => 
         case PRODUCT_DELETE_SUCCESS:
             return {
                 loading: false,
-                product:action.payload
+                success:true
             }
         case PRODUCT_DELETE_FAIL:
             return {
