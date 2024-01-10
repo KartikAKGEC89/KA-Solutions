@@ -3,9 +3,11 @@ import { deleteProduct, listProducts } from '../action/productAction'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/loader'
 import { Button, Table } from 'react-bootstrap'
+import { useNavigate } from 'react-router'
 
 
 const AdminProductScreen = () => {
+  const navigate = useNavigate()
 
     const productList = useSelector(state => state.productList)
     const { loading, products, error } = productList
@@ -21,12 +23,16 @@ const AdminProductScreen = () => {
 
     const deleteHandler = (id) => {
       dispatch(deleteProduct(id))
-    }
+  }
+
+  const createHandler = () => {
+    navigate('/create')
+  }
 
     return (
         <>
             <h1>Product List</h1>
-            <Button>
+            <Button onClick={() => createHandler()}>
                 <i className='fas fa-plus'></i>  Add New Product
             </Button>
             {loading ? (<Loader />) : error ? (alert('Api Not Working')) : (
@@ -37,7 +43,6 @@ const AdminProductScreen = () => {
           <th>Item Name</th>
           <th>Price</th>
           <th>Count In Stock</th>
-          <th>Update</th>
           <th>Delete</th>
         </tr>
               </thead>
@@ -48,11 +53,6 @@ const AdminProductScreen = () => {
                 <td>{ product.name}</td>
                 <td>{ product.price}</td>
                 <td>{product.countInStock}</td>
-                <td>
-                    <Button>
-                         <i className="fas fa-edit" aria-hidden="true"></i>
-                    </Button>
-                </td>
                 <td>
                     <Button onClick={() => deleteHandler(product._id)}>
                         <i className="fa fa-trash" aria-hidden="true"></i>

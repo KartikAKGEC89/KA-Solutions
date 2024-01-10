@@ -15,6 +15,7 @@ import PlaceOrderScreens from './screens/PlaceOrderScreens.jsx';
 import OrderScreens from './screens/OrderScreens.jsx';
 import AdminScreen from './screens/AdminScreen.jsx';
 import AdminProductScreen from './screens/AdminProductScreen.jsx';
+import UpdateProductScreen from './screens/UpdateProductScreen.jsx';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path='/' element={<HomeScreens />} exact />
               <Route path='/product/:id' element={<ProductScreens />} />
               <Route path='/cart/:id?' element={<CartScreens />} />
+              <Route path='/create' element={<UpdateProductScreen/>} />
             </Routes>
         </Container>
       </main>
