@@ -31,4 +31,36 @@ const deleteProductId = asynchandler(async (req, res) => {
     }
 })
 
-module.exports = {getProduct, getProductId, deleteProductId}
+const updateProduct = asynchandler(async (req, res) => {
+
+      const {
+    name,
+    price,
+    description,
+    image,
+    brand,
+    category,
+    countInStock,
+    } = req.body
+    
+
+    const product = await Product.create(
+        {
+            name: name,
+            price: price,
+            description: description,
+            image: image,
+            brand: brand,
+            category: category,
+            countInStock:countInStock
+        }
+    )
+    if (product) {
+        res.status(201).send('created Successfully')
+    } else {
+        res.status(404)
+        throw new Error('Not Created')
+    }
+})
+
+module.exports = {getProduct, getProductId, deleteProductId, updateProduct}
