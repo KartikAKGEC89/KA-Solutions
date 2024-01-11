@@ -62,4 +62,11 @@ const getMyOrderbyId = asynchandler(async (req, res) => {
 })
 
 
-module.exports = {orderController, getOrderbyId, updateOrderById, getMyOrderbyId}
+const getAllOrder = asynchandler(async (req, res) => {
+    const orders = await Order.find({ }).populate('user', 'id name')
+    res.json(orders)
+    
+})
+
+
+module.exports = {orderController, getOrderbyId, updateOrderById, getMyOrderbyId, getAllOrder}
