@@ -1,8 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllOrderAdmin } from '../action/orderAction.js'
+import { getAllOrderAdmin} from '../action/orderAction.js'
 import Loader from '../components/loader.jsx'
-import {Table} from 'react-bootstrap'
+import { Button, Table } from 'react-bootstrap'
+import {LinkContainer} from 'react-router-bootstrap'
 
 const AdminOrderScreen = () => {
 
@@ -14,6 +15,7 @@ const AdminOrderScreen = () => {
     React.useEffect(() => {
         dispatch(getAllOrderAdmin())
     }, [dispatch])
+
   return (
           <>
             <h1>order List</h1>
@@ -27,7 +29,8 @@ const AdminOrderScreen = () => {
           <th>Payment Method</th>
           <th>Booking Date</th>
           <th>Paid</th>
-          <th>Deliver</th>
+              <th>Deliver</th>
+              <th></th>
         </tr>
               </thead>
     {order.map(item => (
@@ -38,8 +41,23 @@ const AdminOrderScreen = () => {
                 <td>{item.totalPrice}</td>
                 <td>{item.paymentMethod}</td>
                 <td>{item.createdAt.substring(0, 10)}</td>
-                <td>{item.isPaid}</td>
-                <td>{item.isDelivered}</td>
+                <td> {item.isPaid ? (
+                   <strong>Paid</strong>
+                  ) : (
+                    <i className='fas fa-times'></i>
+                  )}</td>
+                <td>{item.isDelivered ? (
+                    <strong>Delivered</strong>
+                  ) : (
+                    <i className='fas fa-times'></i>
+          )}</td>
+          <td>
+                  <LinkContainer to={`/order/${item._id}`}>
+                    <Button variant='light' className='btn-sm'>
+                      Details
+                    </Button>
+                  </LinkContainer>
+                </td>
         </tr>
       </tbody>
           ))}        
