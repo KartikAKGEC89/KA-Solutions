@@ -4,10 +4,11 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Loader from '../components/loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getOrderdetails } from '../action/orderAction.js'
-import { Row, Col, Image, Toast } from 'react-bootstrap'
+import { getOrderdetails, updateAdminPay } from '../action/orderAction.js'
+import { Button, Row, Col, Image, Toast } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import QRCode from './Payment.jpg';
+import { deliverOrder } from '../action/orderAction.js';
 
 const OrderScreens = () => {
 
@@ -15,12 +16,31 @@ const OrderScreens = () => {
   const dispatch = useDispatch()
   const getOrder = useSelector((state) => state.getOrder)
   const { order, loading, error } = getOrder
+
+
+  const updatepay = useSelector((state) => state.updatepay)
+  const { loading: loadingPay } = updatepay
+
+  const orderDeliver= useSelector((state) => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
     
   React.useEffect(() => {
-     
     dispatch(getOrderdetails(id)) 
     
-    }, [dispatch, id])
+  }, [dispatch, id, successDeliver])
+  
+    const deliverHandler = () => {
+      dispatch(deliverOrder(order))
+      window.location.reload();
+  }
+
+    const paymentHandler = () => {
+      dispatch(updateAdminPay(order))
+      window.location.reload();
+  }
 
   return (
       <>
@@ -94,32 +114,56 @@ const OrderScreens = () => {
               )}
             </ListGroup.Item>
       </ListGroup>
-      <Card.Body>
-        Delivery Status :- {order.isDelivered ? (
-              <Toast variant='success'>
-                <Toast.Body>
-                  Delivered on {order.deliveredAt}
-                  </Toast.Body>
-                </Toast>
-              ) : (
-                <Toast variant='danger'>
-                  <Toast.Body>Not Delivered</Toast.Body></Toast>
-            )}
+          <Card.Body>
+              Payment Status :- {loadingPay && <Loader />}
             
-            Payment Status :- {order.isPaid ? (
-                <Toast variant ='success'>
-          <Toast.Body>
-            Paid
-          </Toast.Body>
-        </Toast>
-              ) : (
-                 <Toast variant ='danger'>
-          <Toast.Body>
-            Not Paid
-          </Toast.Body>
-        </Toast>
-              )}
-        
+              {userInfo.isAdmin && !order.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Button
+                    type='button'
+                    className='btn btn-block'
+                    onClick={paymentHandler}
+                  >
+                    Mark As Payment Done
+                  </Button>
+                </ListGroup.Item>
+            )}
+
+            {userInfo.isAdmin && order.isPaid && order.isDelivered && (
+                <ListGroup.Item>
+                  <Button
+                    type='button'
+                    className='btn btn-block'
+                    style={{backgroundColor:'green'}}
+                  >
+                    Paid
+                  </Button>
+                </ListGroup.Item>
+            )}
+
+        Delivery Status :- {loadingDeliver && <Loader />}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Button
+                    type='button'
+                    className='btn btn-block'
+                    onClick={deliverHandler}
+                  >
+                    Mark As Delivered
+                  </Button>
+                </ListGroup.Item>
+            )}
+            {userInfo.isAdmin && order.isPaid && order.isDelivered && (
+                <ListGroup.Item>
+                  <Button
+                    type='button'
+                    className='btn btn-block'
+                    style={{backgroundColor:'green'}}
+                  >
+                    Delivered
+                  </Button>
+                </ListGroup.Item>
+            )}
       </Card.Body>
     </Card>  
           )}
