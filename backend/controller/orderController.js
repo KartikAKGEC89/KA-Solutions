@@ -68,5 +68,37 @@ const getAllOrder = asynchandler(async (req, res) => {
     
 })
 
+const paidStatus = asynchandler(async (req, res) => {
+    const order = await Order.findById(req.params.id)
 
-module.exports = {orderController, getOrderbyId, updateOrderById, getMyOrderbyId, getAllOrder}
+        if (order) {
+            order.isPaid = true
+            order.paidAt = Date.now()
+
+        const updateOrder = await order.save()
+
+        res.json(updateOrder)
+    } else {
+        res.status(404)
+        throw new Error('No order')
+    }
+
+})
+
+const deliveryStatus = asynchandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    order.isDelivered = true
+    order.deliveredAt = Date.now()
+
+    const updatedOrder = await order.save()
+
+    res.json(updatedOrder)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
+module.exports = {orderController, getOrderbyId, updateOrderById, getMyOrderbyId, getAllOrder, paidStatus, deliveryStatus}
