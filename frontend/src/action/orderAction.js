@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_MY_ORDER_FAIL, GET_MY_ORDER_REQUEST, GET_MY_ORDER_SUCCESS, GET_ORDER_FAIL, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from '../constants/orderConstants'
+import { GET_ALL_ORDER_FAIL, GET_ALL_ORDER_REQUEST, GET_ALL_ORDER_SUCCESS, GET_MY_ORDER_FAIL, GET_MY_ORDER_REQUEST, GET_MY_ORDER_SUCCESS, GET_ORDER_FAIL, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from '../constants/orderConstants'
 
 
 export const placeOrderAction = (order) => async (dispatch, getState) => {
@@ -136,6 +136,43 @@ export const getMyOrderdetails = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_MY_ORDER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+
+export const getAllOrderAdmin = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_ALL_ORDER_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get('/api/order', config)
+
+    setTimeout(() => {
+       dispatch({
+      type: GET_ALL_ORDER_SUCCESS,
+      payload: data,
+    })
+    }, 1500)
+   
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_ORDER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
