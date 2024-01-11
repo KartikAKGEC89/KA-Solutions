@@ -46,6 +46,11 @@ const Header = () => {
               <Nav.Link  >
                 <i className='fas fa-user'></i> Product List
                 </Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to='/order'>
+              <Nav.Link  >
+                <i className='fas fa-user'></i> Order List
+                </Nav.Link>
               </LinkContainer>
                   <NavItem onClick={handleLogout}>
                     LogOut
