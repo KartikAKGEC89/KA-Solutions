@@ -19,7 +19,10 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
 } from '../constants/userConstants'
 import {
-  GET_MY_ORDER_RESET
+  GET_ALL_ORDER_RESET,
+  GET_MY_ORDER_RESET,
+  ORDER_DELIVER_RESET,
+  UPDATE_ORDER_RESET
 }from '../constants/orderConstants.js'
 
 export const login = (email, password) => async (dispatch) => {
@@ -62,9 +65,13 @@ export const logout = async (dispatch) => {
       type: USER_LOGOUT,
   })
   dispatch({ type: USER_DETAILS_RESET, })
-  dispatch({type: GET_MY_ORDER_RESET,})
-
-    localStorage.removeItem('userInfo')
+  dispatch({ type: GET_MY_ORDER_RESET, })
+  dispatch({ type: GET_ALL_ORDER_RESET, })
+  dispatch({ type: UPDATE_ORDER_RESET, })
+  dispatch({ type: ORDER_DELIVER_RESET, })
+  localStorage.removeItem('userInfo')
+  localStorage.removeItem('cartItems')
+  localStorage.removeItem('shippingAddress')
 }
 
 
