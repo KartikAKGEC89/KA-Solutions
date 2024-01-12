@@ -63,4 +63,33 @@ const updateProduct = asynchandler(async (req, res) => {
     }
 })
 
-module.exports = {getProduct, getProductId, deleteProductId, updateProduct}
+const reviewProductById = asynchandler(async (req, res) => {
+
+    const {rating, comment} = req.body
+    const product = await Product.findById(req.params.id)
+    if (product) {
+
+        const reviews = {
+            name : req.user.name,
+            rating: Number(rating),
+            comment,
+            user: req.user._id
+        }
+
+        product.review.push(reviews)
+
+        product.numReviews = product.review.length
+
+        product.rating = product.review.reduce((acc, item) => item.rating + acc, 0) / product.numReviews
+        
+        await product.save()
+
+        res.status(201).json('Saved')
+        
+    } else {
+        res.status(404)
+        throw new Error('Do not delete')
+    }
+})
+
+module.exports = {getProduct, getProductId, deleteProductId, updateProduct, reviewProductById}
