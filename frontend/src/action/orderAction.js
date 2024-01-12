@@ -24,7 +24,7 @@ export const placeOrderAction = (order) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.post('/api/order', order, config)
+    const { data } = await axios.post('https://cctv-lsec.onrender.com/api/order', order, config)
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,
@@ -58,7 +58,7 @@ export const getOrderdetails = (id) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/order/${id}`, config)
+    const { data } = await axios.get(`https://cctv-lsec.onrender.com/api/order/${id}`, config)
 
     setTimeout(() => {
        dispatch({
@@ -96,7 +96,7 @@ export const payAction = (id, paymentResult) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.post(`/api/order/${id}/pay`, paymentResult, config)
+    const { data } = await axios.post(`https://cctv-lsec.onrender.com/api/order/${id}/pay`, paymentResult, config)
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,
@@ -129,7 +129,7 @@ export const getMyOrderdetails = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get('/api/order/myorder', config)
+    const { data } = await axios.get('https://cctv-lsec.onrender.com/api/order/myorder', config)
 
     setTimeout(() => {
        dispatch({
@@ -166,7 +166,7 @@ export const getAllOrderAdmin = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get('/api/order', config)
+    const { data } = await axios.get('https://cctv-lsec.onrender.com/api/order', config)
 
     setTimeout(() => {
        dispatch({
@@ -203,7 +203,7 @@ export const updateAdminPay = (order) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.put(`/api/order/${order._id}/pay`, {}, config)
+    const { data } = await axios.put(`https://cctv-lsec.onrender.com/api/order/${order._id}/pay`, {}, config)
 
     dispatch({
       type: UPDATE_ORDER_SUCCESS,
@@ -237,7 +237,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.put(
-      `/api/order/${order._id}/delivery`,
+      `https://cctv-lsec.onrender.com/api/order/${order._id}/delivery`,
       {},
       config
     )

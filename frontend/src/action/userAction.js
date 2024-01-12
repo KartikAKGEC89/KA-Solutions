@@ -37,7 +37,7 @@ export const login = (email, password) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      '/api/user/login',
+      'https://cctv-lsec.onrender.com/api/user/login',
       { email, password },
       config
     )
@@ -86,7 +86,7 @@ export const register = (name, email, password) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      '/api/user',
+      'https://cctv-lsec.onrender.com/api/user',
       { name, email, password },
       config
     )
@@ -131,7 +131,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/user/${id}`, config)
+    const { data } = await axios.get(`https://cctv-lsec.onrender.com/api/user/${id}`, config)
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -166,7 +166,7 @@ export const getAdminUserDetails = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get('/api/user/admin', config)
+    const { data } = await axios.get('https://cctv-lsec.onrender.com/api/user/admin', config)
 
     dispatch({
       type: ADMIN_USER_DETAILS_SUCCESS,
@@ -200,7 +200,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.put(`/api/user/profile`, user, config)
+    const { data } = await axios.put(`https://cctv-lsec.onrender.com/api/user/profile`, user, config)
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,

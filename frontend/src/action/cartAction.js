@@ -3,7 +3,7 @@ import axios from 'axios'
 import { CART_REMOVE_ITEM, CART_ADD_ITEM, CART_SHIPPING_ADDRESS, CART_PAYMENT_METHOD } from '../constants/cartConstants'
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
-    const { data } = await axios.get(`/api/product/${id}`)
+    const { data } = await axios.get(`https://cctv-lsec.onrender.com/api/product/${id}`)
     
     dispatch({
         type: CART_ADD_ITEM,

@@ -5,7 +5,7 @@ export const listProducts = () => async (dispatch) => {
 
     try {
         dispatch({ type: PRODUCT_LIST_REQUEST })
-         const { data } = await axios.get('/api/product')
+         const { data } = await axios.get('https://cctv-lsec.onrender.com/api/product')
         setTimeout(() => {
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
@@ -30,7 +30,7 @@ export const detailsProducts = (id) => async (dispatch) => {
 
     try {
         dispatch({ type: PRODUCT_DETAILS_REQUEST })
-         const { data } = await axios.get(`/api/product/${id}`)
+         const { data } = await axios.get(`https://cctv-lsec.onrender.com/api/product/${id}`)
         setTimeout(() => {
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
@@ -66,7 +66,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     }
 
-    await axios.delete(`/api/product/${id}`, config)
+    await axios.delete(`https://cctv-lsec.onrender.com/api/product/${id}`, config)
 
     setTimeout(() => {
        dispatch({
@@ -102,7 +102,7 @@ export const createProduct = (name, image, brand,  category, rating, numReviews,
       },
     }
 
-    const { data } = await axios.post('/api/product/create', {name, image, brand,  category, rating, numReviews, price, countInstock}, config)
+    const { data } = await axios.post('https://cctv-lsec.onrender.com/api/product/create', {name, image, brand,  category, rating, numReviews, price, countInstock}, config)
 
     setTimeout(() => {
        dispatch({
@@ -140,7 +140,7 @@ export const reviewProducts = (productId, reviews) => async (dispatch, getState)
       },
     }
 
-    await axios.post(`/api/product/${productId}/review`, reviews, config)
+    await axios.post(`https://cctv-lsec.onrender.com/api/product/${productId}/review`, reviews, config)
 
     setTimeout(() => {
        dispatch({
