@@ -19,7 +19,6 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
 } from '../constants/userConstants'
 import {
-  GET_ALL_ORDER_RESET,
   GET_MY_ORDER_RESET,
   ORDER_DELIVER_RESET,
   UPDATE_ORDER_RESET
