@@ -12,8 +12,9 @@ const AdminOrderScreen = () => {
     
     const dispatch =useDispatch()
 
-    React.useEffect(() => {
-        dispatch(getAllOrderAdmin())
+  React.useEffect(() => {
+      window.confirm('Refresh your window')
+      dispatch(getAllOrderAdmin('order'))
     }, [dispatch])
 
   return (

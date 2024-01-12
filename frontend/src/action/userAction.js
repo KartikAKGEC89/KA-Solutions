@@ -66,7 +66,6 @@ export const logout = async (dispatch) => {
   })
   dispatch({ type: USER_DETAILS_RESET, })
   dispatch({ type: GET_MY_ORDER_RESET, })
-  dispatch({ type: GET_ALL_ORDER_RESET, })
   dispatch({ type: UPDATE_ORDER_RESET, })
   dispatch({ type: ORDER_DELIVER_RESET, })
   localStorage.removeItem('userInfo')
