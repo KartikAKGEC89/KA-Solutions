@@ -8,6 +8,12 @@ const orderRoutes = require('./routes/orderRoutes')
 const uploadRoute = require ('./routes/uploadRoutes.js')
 dotenv.config()
 const app = express();
+
+const cors = require('cors')
+
+
+app.use(cors())
+
 const {notFound, errorHandler} = require('./middleware/errorMiddleware')
 
 connectDB()
