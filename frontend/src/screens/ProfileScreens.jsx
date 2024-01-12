@@ -116,7 +116,7 @@ const ProfileScreens = () => {
                     }
                     <br />
                     {
-                      item.isDeliver? "Delivered" :"Not Delivered"
+                      item.isDelivered? "Delivered" :"Not Delivered"
                     }
                   </td>
         </tr>
