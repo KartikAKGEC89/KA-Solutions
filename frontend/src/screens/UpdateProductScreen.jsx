@@ -65,7 +65,7 @@ const UpdateProductScreen = () => {
               onChange={(e) => setName(e.target.value)}
             ></Form.Control>
             </Form.Group>
-          <Form.Group controlId='image'>
+          <Form.Group>
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type='text'
@@ -77,7 +77,7 @@ const UpdateProductScreen = () => {
                 type='file'
                 id='image-file'
                 label='Choose File'
-                custom
+                // custom
                 onChange={uploadFileHandler}
               ></Form.Control>
               {uploading && <Loader />}
