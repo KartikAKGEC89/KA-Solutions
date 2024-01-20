@@ -1,19 +1,23 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import Product from '../components/Product'
 import {useDispatch, useSelector}  from 'react-redux'
 import { listProducts } from '../action/productAction'
 import Loader from '../components/loader'
 import Messages from '../components/messages'
+import { useNavigate } from 'react-router'
 
 const HomeScreens = () => {
 
   const dispatch = useDispatch()
+  const navigate=useNavigate()
 
   const productList = useSelector(state => state.productList)
   const {loading, error, products} = productList
   
-
+  const handleClick = () => {
+    navigate('/chatbot')
+  }
 
   React.useEffect(() => {
      dispatch(listProducts())
@@ -32,6 +36,7 @@ const HomeScreens = () => {
               <Product product={product} />
             </Col>
           ))}
+          <Button onClick={handleClick}> ChatBot </Button>
         </Row>
       )}
     </>
