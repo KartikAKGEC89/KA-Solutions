@@ -17,6 +17,7 @@ import AdminScreen from './screens/AdminScreen.jsx';
 import AdminProductScreen from './screens/AdminProductScreen.jsx';
 import UpdateProductScreen from './screens/UpdateProductScreen.jsx';
 import AdminOrderScreen from './screens/AdminOrderScreen.jsx';
+import ChatBot from './screens/ChatBot.jsx';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
               <Route path='/cart/:id?' element={<CartScreens />} />
               <Route path='/create' element={<UpdateProductScreen />} />
               <Route path='/order' element={<AdminOrderScreen />} />
+              <Route path='/chatbot' element={<ChatBot />} />
             </Routes>
         </Container>
       </main>
