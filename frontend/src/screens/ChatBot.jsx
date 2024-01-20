@@ -38,7 +38,7 @@ const Chatbot = () => {
       return { text: 'Hello! I am your chatbot. How can I assist you?', fromUser: false };
     } else if (lowerCaseInput.includes('how are you')) {
       return { text: 'I am just a bot, but thanks for asking!', fromUser: false };
-    } else if (lowerCaseInput.includes('Contact Details')) {
+    } else if (lowerCaseInput.includes('contact details')) {
       return { text: 'Our company contact details are here you contact us any time. Phone Number :- 9310725157, Email Id :- xxxxx@gmail.com', fromUser: false };
     }
     else {
