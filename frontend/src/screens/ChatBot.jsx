@@ -5,7 +5,7 @@ const Chatbot = () => {
   const [userInput, setUserInput] = useState('');
 
   useEffect(() => {
-    handleBotResponse("Hello! I'm your chatbot. How can I assist you?");
+    handleBotResponse("Ask for Options. I am bot. I am currently talk on limited options only.");
   }, []);
 
   const handleUserInput = (e) => {
@@ -40,6 +40,12 @@ const Chatbot = () => {
       return { text: 'I am just a bot, but thanks for asking!', fromUser: false };
     } else if (lowerCaseInput.includes('contact details')) {
       return { text: 'Our company contact details are here you contact us any time. Phone Number :- 9310725157, Email Id :- xxxxx@gmail.com', fromUser: false };
+    } else if (lowerCaseInput.includes('facing issue')) {
+      return { text: 'Conatct using our Email Id :- xxxxx@gmail.com', fromUser: false };
+    } else if (lowerCaseInput.includes('return product')) {
+      return { text: 'Product return in 10 days', fromUser: false };
+    } else if (lowerCaseInput.includes('options')) {
+      return { text: 'For Contact details :- Contact Details, For issue in product :- Facing Issue, For return product :- Return Product', fromUser: false };
     }
     else {
       return { text: 'If you query not resolve ask for contact details from our bot', fromUser: false };
@@ -65,13 +71,26 @@ const Chatbot = () => {
               padding: '8px',
               borderRadius: '5px',
               marginBottom: '8px',
-              textAlign: message.fromUser ? 'right' : 'left',
-              backgroundColor: message.fromUser ? '#e6f7ff' : '#d9f0ff',
+              textAlign: 'left',
+              backgroundColor: '#d9f0ff',
             }}
           >
             {message.text}
           </div>
         ))}
+        {userInput && (
+        <div
+          style={{
+            padding: '8px',
+            borderRadius: '5px',
+            marginBottom: '8px',
+            textAlign: 'right',
+            backgroundColor: '#e6f7ff',
+          }}
+        >
+          {userInput}
+        </div>
+      )}
       </div>
       <div style={{ marginTop: '10px', display: 'flex' }}>
         <input
