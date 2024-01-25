@@ -1,3 +1,8 @@
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+
 
 # E-Business Platform for B2B, B2C and D2C
 
@@ -71,3 +76,13 @@ Contributions are always welcome!
 Please contribute by creating `another branch`. If any existing functionality is not broken then your code merged in Main Branch after `reviewing`. 
 
 For any Issue you connect to me - [Kartik Tyagi](https://www.linkedin.com/in/kartik-tyagi-a96929205/)
+
+
+[contributors-shield]: https://img.shields.io/github/contributors/KartikAKGEC89/KA-Solutions.svg?style=for-the-badge
+[contributors-url]: https://github.com/KartikAKGEC89/KA-Solutions/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/KartikAKGEC89/KA-Solutions.svg?style=for-the-badge
+[forks-url]: https://github.com/KartikAKGEC89/KA-Solutions/network/members
+[stars-shield]: https://img.shields.io/github/stars/KartikAKGEC89/KA-Solutions.svg?style=for-the-badge
+[stars-url]: https://github.com/KartikAKGEC89/KA-Solutions/stargazers
+[issues-shield]: https://img.shields.io/github/issues/KartikAKGEC89/KA-Solutions.svg?style=for-the-badge
+[issues-url]: https://github.com/KartikAKGEC89/KA-Solutions/issues
