@@ -92,4 +92,20 @@ const reviewProductById = asynchandler(async (req, res) => {
     }
 })
 
-module.exports = {getProduct, getProductId, deleteProductId, updateProduct, reviewProductById}
+
+const searchProduct = asynchandler(async (req, res) => {
+    const searchQuery = req.query.query;
+
+    if (!searchQuery) {
+        res.status(400);
+        throw new Error('Search query is required');
+    }
+
+    const products = await Product.find({
+        name: { $regex: searchQuery, $options: 'i' }, 
+    });
+
+    res.json(products);
+});
+
+module.exports = {getProduct, getProductId, deleteProductId, updateProduct, reviewProductById, searchProduct}
