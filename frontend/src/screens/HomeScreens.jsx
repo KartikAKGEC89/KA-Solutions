@@ -5,14 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../action/productAction';
 import Loader from '../components/loader';
 import Messages from '../components/messages';
-import axios from 'axios';
 import { useNavigate } from 'react-router';
 
 const HomeScreens = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
   const productList = useSelector((state) => state.productList);
@@ -23,15 +21,9 @@ const HomeScreens = () => {
     dispatch(listProducts());
   }, [dispatch]);
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axios.get(`https://cctv-lsec.onrender.com/api/product/search/${searchQuery}`);
-      setSearchResults(data);
-      setShowSearchResults(true); 
-    } catch (error) {
-      console.error('Error fetching search results:', error);
-    }
+    setShowSearchResults(true); // Display search results
   };
 
   const handleClearSearch = () => {
@@ -52,6 +44,11 @@ const HomeScreens = () => {
     border: 'none',
     background: 'transparent',
   };
+
+  // Filter products based on the search query
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <>
@@ -87,7 +84,7 @@ const HomeScreens = () => {
         <Messages />
       ) : (
         <Row>
-          {(showSearchResults ? searchResults : products).map((product) => (
+          {(showSearchResults ? filteredProducts : products).map((product) => (
             <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
               <Product product={product} />
             </Col>
