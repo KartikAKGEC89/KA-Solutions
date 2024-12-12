@@ -6,7 +6,7 @@ const Chatbot = () => {
 
   useEffect(() => {
     handleBotResponse("Ask for Options. I am bot. I am currently talk on limited options only.");
-  }, []);
+  });
 
   const handleUserInput = (e) => {
     setUserInput(e.target.value);

@@ -101,11 +101,21 @@ const searchProduct = asynchandler(async (req, res) => {
         throw new Error('Search query is required');
     }
 
-    const products = await Product.find({
-        name: { $regex: searchQuery, $options: 'i' }, 
-    });
+    try {
+        const products = await Product.find({
+            name: { $regex: searchQuery, $options: 'i' },
+        });
 
-    res.send(products);
+        if (products.length > 0) {
+            res.json(products);
+        } else {
+            res.status(404).json({ message: 'No products found matching your query' });
+        }
+    } catch (error) {
+        console.error("Error in search query:", error);  
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    }
 });
+
 
 module.exports = {getProduct, getProductId, deleteProductId, updateProduct, reviewProductById, searchProduct}
