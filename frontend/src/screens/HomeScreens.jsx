@@ -18,6 +18,7 @@ const HomeScreens = () => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
+  // Fetch all products on component mount
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);
@@ -25,9 +26,9 @@ const HomeScreens = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.get(`https://cctv-lsec.onrender.com/api/product/search?query=${searchQuery}`);
+      const { data } = await axios.get(`https://cctv-lsec.onrender.com/api/product/search/${searchQuery}`);
       setSearchResults(data);
-      setShowSearchResults(true); // Show only search results
+      setShowSearchResults(true); 
     } catch (error) {
       console.error('Error fetching search results:', error);
     }
@@ -79,6 +80,7 @@ const HomeScreens = () => {
           </Form>
         </Col>
       </Row>
+
       {loading ? (
         <Loader />
       ) : error ? (

@@ -15,6 +15,6 @@ router.route('/create').post(authorizationToken, adminMiddleware, updateProduct)
 
 router.route('/:id/review').post(authorizationToken, reviewProductById)
 
-router.route('/search').get(searchProduct);
+router.route('/search/:keyword').get(searchProduct);
 
 module.exports = router

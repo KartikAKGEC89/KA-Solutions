@@ -94,28 +94,34 @@ const reviewProductById = asynchandler(async (req, res) => {
 
 
 const searchProduct = asynchandler(async (req, res) => {
-    const searchQuery = req.query.query;
-
+    const searchQuery = req.params.keyword;  
+    
     if (!searchQuery) {
-        res.status(400);
-        throw new Error('Search query is required');
+        return res.status(400).json({ message: 'Search query is required' });
     }
 
     try {
+        
+        console.log('Search Query:', searchQuery);
+
+        
         const products = await Product.find({
-            name:searchQuery,
+            name: { $regex: searchQuery, $options: 'i' }, 
         });
 
+       
         if (products.length > 0) {
-            res.json(products);
+            return res.json(products);
         } else {
-            res.status(404).json({ message: 'No products found matching your query' });
+            return res.status(404).json({ message: 'No products found matching your query' });
         }
+
     } catch (error) {
-        console.error("Error in search query:", error);  
+        console.error('Error during search:', error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 });
+
 
 
 module.exports = {getProduct, getProductId, deleteProductId, updateProduct, reviewProductById, searchProduct}
