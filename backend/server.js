@@ -22,6 +22,9 @@ app.get('/', (req, res) => {
     res.send("API running")
 })
 
+const _dirname = path.resolve()
+app.use('/uploads', express.static(path.join(_dirname, '/uploads')))
+
 app.use(express.json())
 
 app.use('/api/product', productRoutes);
@@ -31,9 +34,6 @@ app.use('/api/user', userRoutes);
 app.use('/api/upload', uploadRoute);
 
 app.use('/', orderRoutes)
-
-const _dirname = path.resolve()
-app.use('/uploads', express.static(path.join(_dirname, '/uploads')))
 
 app.use(notFound);
 app.use(errorHandler);

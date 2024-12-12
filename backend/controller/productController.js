@@ -3,11 +3,22 @@ const Product = require('../models/productModel')
 const asynchandler = require('express-async-handler')
 
 
-const getProduct = asynchandler( async (req,res) => {
-    const product = await Product.find({})
+// const getProduct = asynchandler( async (req,res) => {
+//     const product = await Product.find({})
     
-    res.send(product);
-})
+//     res.send(product);
+// })
+
+const getProduct = asynchandler(async (req, res) => {
+    const products = await Product.find({});
+    const baseUrl = "https://cctv-lsec.onrender.com";
+    const updatedProducts = products.map(product => ({
+        ...product._doc,
+        image: baseUrl + product.image,
+    }));
+    res.status(200).json(updatedProducts);
+});
+
 
 const getProductId = asynchandler( async (req,res) => {
     const product = await Product.findById(req.params.id)
