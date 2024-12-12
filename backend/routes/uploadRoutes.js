@@ -1,61 +1,61 @@
-const path = require('path');
 const express = require('express');
 const multer = require('multer');
+const path = require('path');
 const fs = require('fs');
-
 const router = express.Router();
 
-
+// Ensure the 'uploads' directory exists, if not create it
 const uploadsDir = path.join(__dirname, '../uploads');
 if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
-    console.log('Uploads directory created');
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log('Uploads directory created');
 }
 
-
+// Multer storage setup
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    console.log('Destination folder:', uploadsDir);
-    cb(null, uploadsDir); 
+  destination(req, file, cb) {
+    cb(null, uploadsDir); // Save files to the 'uploads' directory
   },
   filename(req, file, cb) {
-    const fileName = `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`;
-    console.log('Saving file as:', fileName);  // Log the filename being saved
-    cb(null, fileName); // Name of the file
-  }
+    cb(
+      null,
+      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
+    ); // Use a unique filename
+  },
 });
 
-
+// Check the file type
 function checkFileType(file, cb) {
-    const filetypes = /jpg|jpeg|png/;
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = filetypes.test(file.mimetype);
+  const filetypes = /jpg|jpeg|png/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
 
-    console.log('File type check:', extname, mimetype); 
-    if (extname && mimetype) {
-        cb(null, true);  
-    } else {
-        cb('Image Only!');
-    }
+  if (extname && mimetype) {
+    return cb(null, true);
+  } else {
+    cb('Images only!');
+  }
 }
 
-
+// Multer upload middleware
 const upload = multer({
-    storage,
-    fileFilter: function(req, file, cb) {
-        checkFileType(file, cb);
-    }
+  storage,
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
 });
 
-
+// POST route for uploading files
 router.post('/', upload.single('image'), (req, res) => {
-    console.log('Received request to upload image');
-    if (req.file) {
-        console.log('File uploaded:', req.file);
-        res.json(`/${req.file.path}`); 
-    } else {
-        res.status(400).send('No file uploaded');
-    }
+  if (req.file) {
+    // Send the uploaded file path as the response
+    res.send({
+      message: 'File uploaded successfully',
+      filePath: `/uploads/${req.file.filename}`,
+    });
+  } else {
+    res.status(400).send({ message: 'No file uploaded' });
+  }
 });
 
 module.exports = router;
