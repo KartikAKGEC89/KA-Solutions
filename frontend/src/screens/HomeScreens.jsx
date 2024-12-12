@@ -11,24 +11,26 @@ const HomeScreens = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedPrice, setSelectedPrice] = useState('');
+  const [selectedRating, setSelectedRating] = useState('');
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
-  // Fetch all products on component mount
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setShowSearchResults(true); // Display search results
   };
 
   const handleClearSearch = () => {
     setSearchQuery('');
-    setShowSearchResults(false); // Show all products again
+    setSelectedCategory('');
+    setSelectedPrice('');
+    setSelectedRating('');
   };
 
   const handleClick = () => {
@@ -45,10 +47,19 @@ const HomeScreens = () => {
     background: 'transparent',
   };
 
-  // Filter products based on the search query
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
+
+    const matchesPrice =
+      selectedPrice === 'low' ? product.price < 100 :
+      selectedPrice === 'high' ? product.price >= 100 : true;
+
+    const matchesRating = selectedRating ? product.rating >= selectedRating : true;
+
+    return matchesSearch && matchesCategory && matchesPrice && matchesRating;
+  });
 
   return (
     <>
@@ -65,15 +76,59 @@ const HomeScreens = () => {
             <Button type="submit" variant="primary">
               Search
             </Button>
-            {showSearchResults && (
-              <Button
-                variant="secondary"
-                className="ms-2"
-                onClick={handleClearSearch}
+            <Button
+              variant="secondary"
+              className="ms-2"
+              onClick={handleClearSearch}
+            >
+              Clear
+            </Button>
+          </Form>
+        </Col>
+
+        <Col md={6} className="mb-4 d-flex justify-content-end">
+          <Form className="d-flex justify-content-end gap-3">
+            <Form.Group controlId="category" className="mb-0">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
               >
-                Clear
-              </Button>
-            )}
+                <option value="">All Categories</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Home">Home</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="price" className="mb-0">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedPrice}
+                onChange={(e) => setSelectedPrice(e.target.value)}
+              >
+                <option value="">All Prices</option>
+                <option value="low">Below 100</option>
+                <option value="high">100 and above</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="rating" className="mb-0">
+              <Form.Label>Rating</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedRating}
+                onChange={(e) => setSelectedRating(e.target.value)}
+              >
+                <option value="">All Ratings</option>
+                <option value="4">4 stars and above</option>
+                <option value="3">3 stars and above</option>
+                <option value="2">2 stars and above</option>
+                <option value="1">1 star and above</option>
+              </Form.Control>
+            </Form.Group>
           </Form>
         </Col>
       </Row>
@@ -84,13 +139,23 @@ const HomeScreens = () => {
         <Messages />
       ) : (
         <Row>
-          {(showSearchResults ? filteredProducts : products).map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))
+          ) : (
+            <Col>
+              <p>No products found with the selected filters.</p>
             </Col>
-          ))}
+          )}
           <Button style={buttonStyle} onClick={handleClick}>
-            <img src="/images/Chatbot.gif" alt="Chatbot" style={{ width: '100%' }} />
+            <img
+              src="/images/Chatbot.gif"
+              alt="Chatbot"
+              style={{ width: '100%' }}
+            />
           </Button>
         </Row>
       )}
