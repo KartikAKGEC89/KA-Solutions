@@ -1,146 +1,160 @@
-import axios from 'axios'
-import React from 'react'
-import {Form, Button} from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import { createProduct } from '../action/productAction'
-import Loader from '../components/loader'
+import React, { useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { createProduct } from '../action/productAction';
+import Loader from '../components/loader';
+import axios from 'axios';
 
 const UpdateProductScreen = () => {
-  const dispatch = useDispatch()
-  const [name, setName] = React.useState('')
-  const [price, setPrice] = React.useState('')
-  const [image, setImage] = React.useState('')
-  const [category, setCategory] = React.useState('')
-  const [brand, setBrand] = React.useState('')
-  const [rating, setRating] = React.useState('')
-  const [numReviews, setNumReviews] = React.useState('')
-  const [countInStock, setCountInStock] = React.useState('')
-  const [uploading, setUploading] = React.useState(false)
-  
+  const dispatch = useDispatch();
 
+  const [name, setName] = React.useState('');
+  const [price, setPrice] = React.useState('');
+  const [image, setImage] = React.useState('');
+  const [category, setCategory] = React.useState('');
+  const [brand, setBrand] = React.useState('');
+  const [rating, setRating] = React.useState('');
+  const [numReviews, setNumReviews] = React.useState('');
+  const [countInStock, setCountInStock] = React.useState('');
+  const [uploading, setUploading] = React.useState(false);
 
-  const updateProduct = useSelector(state => state.updateProduct)
-  const { loading, success, error } = updateProduct
-  
- const uploadFileHandler = async (e) => {
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('image', file)
-    setUploading(true)
+  const updateProduct = useSelector((state) => state.updateProduct);
+  const { loading, success, error } = updateProduct;
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
 
     try {
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      }
+      };
 
-      const { data } = await axios.post('https://cctv-lsec.onrender.com/api/upload', formData, config)
+      const { data } = await axios.post(
+        'https://cctv-lsec.onrender.com/api/upload',
+        formData,
+        config
+      );
 
-      setImage(data)
-      setUploading(false)
+      setImage(data);
+      setUploading(false);
     } catch (error) {
-      console.error(error)
-      setUploading(false)
+      console.error(error);
+      setUploading(false);
     }
-  }
+  };
 
-    
-    const submitHandler = (e) => {
-      e.preventDefault();
-      dispatch(createProduct(name, image, brand, category, rating, numReviews, price, countInStock))
-       window.location.reload(); 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      createProduct(name, image, brand, category, rating, numReviews, price, countInStock)
+    );
+  };
+
+  // Reload the page when the product is created successfully
+  useEffect(() => {
+    if (success) {
+      alert('Product created successfully!');
+      window.location.reload();
     }
+  }, [success]);
+
   return (
-      <>
-          {loading ? (<Loader />) :
-              error ? alert('Not created') : success ? alert('Created') : (
-            <Form onSubmit={submitHandler}>
-          <Form.Group controlId='name'>
+    <>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        alert('Product creation failed!')
+      ) : (
+        <Form onSubmit={submitHandler}>
+          <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              type='name'
-              placeholder='Enter name'
+              type="name"
+              placeholder="Enter name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             ></Form.Control>
-            </Form.Group>
+          </Form.Group>
           <Form.Group>
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.Control
-                type='file'
-                id='image-file'
-                label='Choose File'
-                // custom
-                onChange={uploadFileHandler}
-              ></Form.Control>
-              {uploading && <Loader />}
-            </Form.Group>
-                           <Form.Group controlId='brand'>
+            <Form.Label>Image</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter image url"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            ></Form.Control>
+            <Form.Control
+              type="file"
+              id="image-file"
+              label="Choose File"
+              onChange={uploadFileHandler}
+            ></Form.Control>
+            {uploading && <Loader />}
+          </Form.Group>
+          <Form.Group controlId="brand">
             <Form.Label>Brand</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Enter brand'
+              type="text"
+              placeholder="Enter brand"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
             ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='category'>
+          </Form.Group>
+          <Form.Group controlId="category">
             <Form.Label>Category</Form.Label>
             <Form.Control
-              type='name'
-              placeholder='Enter category'
+              type="name"
+              placeholder="Enter category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             ></Form.Control>
-            </Form.Group>
-               <Form.Group controlId='rating'>
+          </Form.Group>
+          <Form.Group controlId="rating">
             <Form.Label>Rating</Form.Label>
             <Form.Control
-              type='Number'
-              placeholder='Enter rating'
+              type="Number"
+              placeholder="Enter rating"
               value={rating}
               onChange={(e) => setRating(e.target.value)}
             ></Form.Control>
-            </Form.Group>
-               <Form.Group controlId='numReviews'>
+          </Form.Group>
+          <Form.Group controlId="numReviews">
             <Form.Label>NumReviews</Form.Label>
             <Form.Control
-              type='Number'
-              placeholder='Enter numReviews'
+              type="Number"
+              placeholder="Enter numReviews"
               value={numReviews}
               onChange={(e) => setNumReviews(e.target.value)}
             ></Form.Control>
-              </Form.Group>
-               <Form.Group controlId='Price'>
+          </Form.Group>
+          <Form.Group controlId="Price">
             <Form.Label>Price</Form.Label>
             <Form.Control
-              type='Number'
-              placeholder='Enter Price'
+              type="Number"
+              placeholder="Enter Price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             ></Form.Control>
-              </Form.Group>   
-               <Form.Group controlId='CountInStock'>
+          </Form.Group>
+          <Form.Group controlId="CountInStock">
             <Form.Label>CountInStock</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Enter CountInStock'
+              type="text"
+              placeholder="Enter CountInStock"
               value={countInStock}
               onChange={(e) => setCountInStock(e.target.value)}
             ></Form.Control>
-              </Form.Group>
-              <Button type='submit'>Create Product</Button>
-            </Form>      
-          )}
+          </Form.Group>
+          <Button type="submit">Create Product</Button>
+        </Form>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default UpdateProductScreen
+export default UpdateProductScreen;

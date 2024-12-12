@@ -49,17 +49,21 @@ const HomeScreens = () => {
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-
     const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
-
     const matchesPrice =
       selectedPrice === 'low' ? product.price < 100 :
       selectedPrice === 'high' ? product.price >= 100 : true;
-
     const matchesRating = selectedRating ? product.rating >= selectedRating : true;
-
     return matchesSearch && matchesCategory && matchesPrice && matchesRating;
   });
+
+  const groupedProducts = filteredProducts.reduce((acc, product) => {
+    if (!acc[product.category]) {
+      acc[product.category] = [];
+    }
+    acc[product.category].push(product);
+    return acc;
+  }, {});
 
   return (
     <>
@@ -99,6 +103,7 @@ const HomeScreens = () => {
                 <option value="Electronics">Electronics</option>
                 <option value="Fashion">Fashion</option>
                 <option value="Home">Home</option>
+                <option value="Vegetable">Vegetable</option>
               </Form.Control>
             </Form.Group>
 
@@ -138,27 +143,29 @@ const HomeScreens = () => {
       ) : error ? (
         <Messages />
       ) : (
-        <Row>
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
-              </Col>
-            ))
-          ) : (
-            <Col>
-              <p>No products found with the selected filters.</p>
-            </Col>
-          )}
-          <Button style={buttonStyle} onClick={handleClick}>
-            <img
-              src="/images/Chatbot.gif"
-              alt="Chatbot"
-              style={{ width: '100%' }}
-            />
-          </Button>
-        </Row>
+        Object.keys(groupedProducts).map((category) => (
+          <div key={category} className="mb-4">
+            <h3 style={{ backgroundColor: 'black', color: 'white', padding: '10px', width: "210px" }}>
+              {category}
+            </h3>
+            <Row>
+              {groupedProducts[category].map((product) => (
+                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                  <Product product={product} />
+                </Col>
+              ))}
+            </Row>
+          </div>
+        ))
       )}
+
+      <Button style={buttonStyle} onClick={handleClick}>
+        <img
+          src="/images/Chatbot.gif"
+          alt="Chatbot"
+          style={{ width: '100%' }}
+        />
+      </Button>
     </>
   );
 };
