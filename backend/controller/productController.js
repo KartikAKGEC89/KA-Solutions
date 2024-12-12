@@ -103,7 +103,7 @@ const searchProduct = asynchandler(async (req, res) => {
 
     try {
         const products = await Product.find({
-            name: { $regex: searchQuery, $options: 'i' },
+            name:searchQuery,
         });
 
         if (products.length > 0) {
