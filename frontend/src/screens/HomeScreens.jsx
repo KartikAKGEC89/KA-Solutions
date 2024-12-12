@@ -1,26 +1,46 @@
-import React from 'react'
-import { Row, Col, Button } from 'react-bootstrap'
-import Product from '../components/Product'
-import { useDispatch, useSelector } from 'react-redux'
-import { listProducts } from '../action/productAction'
-import Loader from '../components/loader'
-import Messages from '../components/messages'
-import { useNavigate } from 'react-router'
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Button, Form } from 'react-bootstrap';
+import Product from '../components/Product';
+import { useDispatch, useSelector } from 'react-redux';
+import { listProducts } from '../action/productAction';
+import Loader from '../components/loader';
+import Messages from '../components/messages';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 const HomeScreens = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
 
-  const productList = useSelector((state) => state.productList)
-  const { loading, error, products } = productList
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
+
+  useEffect(() => {
+    dispatch(listProducts());
+  }, [dispatch]);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.get(`https://cctv-lsec.onrender.com/api/product/search?query=${searchQuery}`);
+      setSearchResults(data);
+      setShowSearchResults(true); // Show only search results
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery('');
+    setShowSearchResults(false); // Show all products again
+  };
 
   const handleClick = () => {
-    navigate('/chatbot')
-  }
-
-  React.useEffect(() => {
-    dispatch(listProducts())
-  }, [dispatch])
+    navigate('/chatbot');
+  };
 
   const buttonStyle = {
     position: 'fixed',
@@ -30,17 +50,42 @@ const HomeScreens = () => {
     width: '15vh',
     border: 'none',
     background: 'transparent',
-  }
+  };
 
   return (
     <>
+      <Row>
+        <Col md={6} className="mx-auto">
+          <Form onSubmit={handleSearch} className="d-flex mb-4">
+            <Form.Control
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="me-2"
+            />
+            <Button type="submit" variant="primary">
+              Search
+            </Button>
+            {showSearchResults && (
+              <Button
+                variant="secondary"
+                className="ms-2"
+                onClick={handleClearSearch}
+              >
+                Clear
+              </Button>
+            )}
+          </Form>
+        </Col>
+      </Row>
       {loading ? (
         <Loader />
       ) : error ? (
         <Messages />
       ) : (
         <Row>
-          {products.map((product) => (
+          {(showSearchResults ? searchResults : products).map((product) => (
             <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
               <Product product={product} />
             </Col>
@@ -51,7 +96,7 @@ const HomeScreens = () => {
         </Row>
       )}
     </>
-  )
-}
+  );
+};
 
-export default HomeScreens
+export default HomeScreens;

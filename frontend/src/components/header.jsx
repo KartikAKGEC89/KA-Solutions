@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Navbar, Container, Nav, NavDropdown, NavItem, Form, Button } from 'react-bootstrap'
+import React from 'react'
+import { Navbar, Container, Nav, NavDropdown, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../action/userAction'
@@ -10,7 +10,7 @@ const Header = () => {
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
 
-  const [searchQuery, setSearchQuery] = useState('')
+  // const [searchQuery, setSearchQuery] = useState('')
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -18,13 +18,13 @@ const Header = () => {
     navigate('/login')
   }
 
-  const handleSearch = (e) => {
-    e.preventDefault()
-    if (searchQuery.trim()) {
-      navigate(`/search?query=${searchQuery}`)
-      setSearchQuery('')
-    }
-  }
+  // const handleSearch = (e) => {
+  //   e.preventDefault()
+  //   if (searchQuery.trim()) {
+  //     navigate(`https://cctv-lsec.onrender.com/api/search?query=${searchQuery}`)
+  //     setSearchQuery('')
+  //   }
+  // }
 
   return (
     <header>
@@ -79,7 +79,7 @@ const Header = () => {
                       LogOut
                     </NavItem>
                   </NavDropdown>
-                  <Form className="d-flex" onSubmit={handleSearch}>
+                  {/* <Form className="d-flex" onSubmit={handleSearch}>
                     <Form.Control
                       type="text"
                       placeholder="Search..."
@@ -90,7 +90,7 @@ const Header = () => {
                     <Button type="submit" variant="outline-light" className="ms-2">
                       Search
                     </Button>
-                  </Form>
+                  </Form> */}
                 </>
               ) : (
                 <LinkContainer to="/login">

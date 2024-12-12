@@ -105,7 +105,7 @@ const searchProduct = asynchandler(async (req, res) => {
         name: { $regex: searchQuery, $options: 'i' }, 
     });
 
-    res.json(products);
+    res.send(products);
 });
 
 module.exports = {getProduct, getProductId, deleteProductId, updateProduct, reviewProductById, searchProduct}
